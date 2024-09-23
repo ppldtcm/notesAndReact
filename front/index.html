@@ -1,0 +1,110 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заметки</title>
+    <style>
+        table {
+            width: 100%;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            padding: 5px 10px;
+            border: none;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <script src="site.js">1</script>
+    <hr>
+
+    <form id="login" style="display: block" onsubmit="userr.authenticationForm(event)">
+
+        <h2>Вход</h2>
+
+        <div>
+            <p> Либо admin/admin</p>
+            <p>Либо user/user</p>
+
+        </div>
+        <div>
+            <input type="text" name="User[name]" placeholder="User[name]">
+        </div> 
+
+        <br>
+
+        <div>
+            <input type="text" name="User[password]" placeholder="User[password]"></input>
+        </div>
+        <br>
+        <button type="submit">Войти</button>
+
+    </form>
+
+
+
+    <!-- <p id="logout"  style="display: none" >Для выхода перезагрузите страницу</p> -->
+    <p id="logout" onclick = userr.logoutUser(event)  style="display: none" >Logout</p>
+
+    <div id="welcome" style="display: none;">
+        <hr>
+
+        <form id="project-create-form" onsubmit="site.createProjectFormSubmit(event)">
+
+            <h2>Новая заметка</h2>
+
+            <div>
+                <input type="text" name="Note[title]" placeholder="Note[title]" value="новая заметка">
+            </div>
+
+            <br>
+
+            <div>
+                <textarea name="Note[body]" placeholder="Note[body]">новая новая заметка</textarea>
+            </div>
+
+            <br>
+<!-- 
+            <div>
+                <textarea type="text" name="Note[id_user]" placeholder="Note[id_user]">1</textarea>
+            </div>
+            <br> -->
+
+            <button type="submit">submit</button>
+
+        </form>
+
+        <hr>
+
+        <!-- таблица со всеми заметками пользователя -->
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Body</th>
+                </tr>
+            </thead>
+            <tbody id="aaa">
+            </tbody>
+        </table>
+
+        <hr>
+
+    </div>
+
+
+</body>
+
+</html>
