@@ -13,6 +13,8 @@ const site = {
         let formData = new FormData(form);        
         formData.append('Note[id_user]', site.idUserr);
 
+        console.log(formData)
+
         let response = await fetch(
             site.backBaseUrl + '/api/create-project',
             {
@@ -22,6 +24,7 @@ const site = {
         );
 
         let responseData = await response.json();
+        console.log(responseData)
         site.viewNote();
     },
     
@@ -55,7 +58,7 @@ const site = {
             const notes = responseData.notes;
 
             site.insertRowInTable(notes);
-            console.log(notes);
+            // console.log(notes);
 
 
         } catch (error) {

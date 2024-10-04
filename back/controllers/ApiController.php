@@ -18,15 +18,18 @@ class ApiController extends \yii\web\Controller
     {
         $behaviors = parent::behaviors();
 
-        // $behaviors['corsFilter'] = [
-        //     'class' => \yii\filters\Cors::className(),
-        //     'cors' => [
-        //         'Origin'                           => "*",
-        //         'Access-Control-Request-Method'    => ['POST', 'GET'],
-        //         'Access-Control-Allow-Credentials' => true,
-        //         'Access-Control-Max-Age'           => 3600,
-        //     ],
-        // ];
+        // Настраиваем CORS
+        $behaviors['corsFilter'] = [
+            'class' => \yii\filters\Cors::class,
+            'cors' => [
+                // Разрешаем любые домены
+                'Origin' => ['*'],
+                'Access-Control-Request-Method' => ['POST', 'GET', 'OPTIONS', 'DELETE', 'PUT'], // Разрешенные HTTP-методы
+                'Access-Control-Request-Headers' => ['*'], // Разрешенные заголовки
+                'Access-Control-Allow-Credentials' => null, // Устанавливайте true, если нужны куки
+                'Access-Control-Max-Age' => 3600, // Время жизни предзапроса
+            ],
+        ];
 
         return $behaviors;
     }
@@ -50,6 +53,9 @@ class ApiController extends \yii\web\Controller
     public function actionCreateProject()
     {
         $request = \Yii::$app->request;
+        // $data = \Yii::$app->request->getRawBody(); // Получаем сырые данные JSON
+
+        // $parsedData = json_decode($data, true); // Парсим JSON
 
         $post = $request->post();
 
@@ -64,11 +70,12 @@ class ApiController extends \yii\web\Controller
         $loadOk = $newNote->load($post);
 
         $saveOk = $newNote->save();
-    
+
         $saveErrors = $newNote->errors;
 
         return [
             // 'msg' => 'api create project ok',
+            '$request' => $request,
             '$post' => $post,
             '$loadOk' => $loadOk,
             '$saveOk' => $saveOk,
@@ -184,21 +191,21 @@ class ApiController extends \yii\web\Controller
     {
         $request = \Yii::$app->request;
         $post = $request->post();
-    
+
         \Yii::info([
             '$post' => $post,
         ], 'my / ' . __METHOD__);
-    
+
         $name = $post['User']['name'] ?? null;
         $password = $post['User']['password'] ?? null;
-    
+
         if (!$name || !$password) {
             return $this->asJson([
                 'status' => 'error',
                 'message' => 'Не указаны имя или пароль',
             ]);
         }
-    
+
 
         $user = UserNote::findOne(['name' => $name, 'password' => $password]);
 
