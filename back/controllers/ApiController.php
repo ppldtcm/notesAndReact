@@ -22,12 +22,14 @@ class ApiController extends \yii\web\Controller
         $behaviors['corsFilter'] = [
             'class' => \yii\filters\Cors::class,
             'cors' => [
-                // Разрешаем любые домены
                 'Origin' => ['*'],
-                'Access-Control-Request-Method' => ['POST', 'GET', 'OPTIONS', 'DELETE', 'PUT'], // Разрешенные HTTP-методы
-                'Access-Control-Request-Headers' => ['*'], // Разрешенные заголовки
-                'Access-Control-Allow-Credentials' => null, // Устанавливайте true, если нужны куки
-                'Access-Control-Max-Age' => 3600, // Время жизни предзапроса
+				
+				// allow OPTIONS
+				'Access-Control-Expose-Headers' => ['*'],
+				
+				// allow POST
+				'Access-Control-Allow-Headers' => ['*'],
+				
             ],
         ];
 
@@ -62,6 +64,7 @@ class ApiController extends \yii\web\Controller
         \Yii::info([
             '$post' => $post,
         ], 'my / ' . __METHOD__);
+
 
         $newNote = new Note();
 
@@ -205,7 +208,6 @@ class ApiController extends \yii\web\Controller
                 'message' => 'Не указаны имя или пароль',
             ]);
         }
-
 
         $user = UserNote::findOne(['name' => $name, 'password' => $password]);
 
