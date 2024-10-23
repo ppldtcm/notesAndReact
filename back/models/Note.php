@@ -2,17 +2,11 @@
 
 namespace app\models;
 
+// use yii\db\ActiveRecord;
+use yii\web\UploadedFile;
 use Yii;
 
-/**
- * This is the model class for table "note".
- *
- * @property int $id_note
- * @property string|null $title
- * @property string|null $body
- * @property string $created_at
- * @property int $id_user
- */
+
 class Note extends \yii\db\ActiveRecord
 {
     /**
@@ -26,6 +20,12 @@ class Note extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+
+
+
+    public $file;
+
+
     public function rules()
     {
         return [
@@ -33,7 +33,8 @@ class Note extends \yii\db\ActiveRecord
             [['created_at'], 'safe'],
             [['id_user'], 'required'],
             [['id_user'], 'integer'],
-            [['title'], 'string', 'max' => 255],
+            [['title', 'tag'], 'string', 'max' => 255],
+            [['file_path'], 'string', 'max' => 512],
         ];
     }
 
@@ -48,6 +49,8 @@ class Note extends \yii\db\ActiveRecord
             'body' => 'Body',
             'created_at' => 'Created At',
             'id_user' => 'Id User',
+            'tag' => 'Tag',
+            'file_path' => 'File Path',
         ];
     }
 }

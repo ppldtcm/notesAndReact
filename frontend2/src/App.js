@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-
+import { Link } from 'react-router-dom';  // Импортируем Link
 import Header from './components/Header';
 import ViewNotesR from './components/ViewNotesR';
 import Registration from './components/Registration';
+import Markdown from 'react-markdown'
 
 function App() {
   const [userId, setUserId] = useState(null);
@@ -34,6 +35,13 @@ function App() {
           <button onClick={handleLogout}>Выйти</button>
 
           <hr />
+
+          <Link to="/search">
+            <button>Перейти на страницу поиска</button> {/* Кнопка для перехода */}
+          </Link>
+
+          <hr />
+
           <ViewNotesR userId={userId} />
         </>
       )}

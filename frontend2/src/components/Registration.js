@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Markdown from 'react-markdown'
 
 export default function Registration({ userId, setUserId }) {
 

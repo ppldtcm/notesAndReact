@@ -16,9 +16,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
 
-    <!-- <?= $form->field($model, 'created_at')->textInput() ?> -->
+    <?= $form->field($model, 'created_at')->textInput() ?>
 
     <?= $form->field($model, 'id_user')->textInput() ?>
+
+    <?= $form->field($model, 'tag')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'file_path')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

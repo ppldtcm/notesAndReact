@@ -1,12 +1,14 @@
 import React from 'react';
+import Markdown from 'react-markdown'
 
-export default function SaveUpdatedNoteButR({ userId, noteId, title, body, notes, setNotes, setIsEditing}) {
+export default function SaveUpdatedNoteButR({ userId, noteId, title, body, tag, notes, setNotes, setIsEditing}) {
     async function handleSave() {
         let requestData = {
             id_note: noteId,
             title: title,
             body: body,
             id_user: userId,
+            tag: tag,
         };
         console.log(requestData)
 
@@ -17,11 +19,12 @@ export default function SaveUpdatedNoteButR({ userId, noteId, title, body, notes
             },
             body: JSON.stringify(requestData),
         });
+        console.log(response)
 
         if (response.ok) {
             const updatedNotes = notes.map(note =>
                 note.id_note === noteId
-                    ? { ...note, title: title, body: body } // обновляем заметку
+                    ? { ...note, title: title, body: body, tag: tag,} // обновляем заметку
                     : note // оставляем без изменений
             );
             setNotes(updatedNotes);

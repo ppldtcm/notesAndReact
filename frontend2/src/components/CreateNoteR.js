@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import TagR from './components1/TagR'
+
+import Markdown from 'react-markdown'
 
 export default function CreateNoteR({ userId, notes, setNotes }) {
 
-    // const idUser = 1
+    const [selectedTag, setSelectedTag] = useState('no tag'); // Состояние для выбранного тега
 
     async function create(event) {
 
@@ -21,7 +24,7 @@ export default function CreateNoteR({ userId, notes, setNotes }) {
         if (response.ok) {
             const data = await response.json();
             console.log(data);
-            setNotes(notes)
+            setNotes([...notes, data]);
         } else {
             console.error('Ошибка при загрузке данных:', response);
         }
@@ -29,11 +32,18 @@ export default function CreateNoteR({ userId, notes, setNotes }) {
     }
     return (
         <form onSubmit={create}>
-            <h3>Создать заметку</h3>
+            <Markdown>{`### Создать заметку`}</Markdown>
             <input type="text" name="Note[title]" />
             <br />
             <br />
             <input type="text" name="Note[body]" />
+            <br />
+            <br />
+            <input type="file" name="Note[file]" />
+            <br />
+            <br />
+            tag:
+            <TagR selectedTag={selectedTag} onTagChange={setSelectedTag} />
             <br />
             <br />
             <button type="submit">Create</button>

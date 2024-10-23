@@ -34,6 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'body:ntext',
             'created_at',
             'id_user',
+            //'tag',
+            //'file_path',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Note $model, $key, $index, $column) {

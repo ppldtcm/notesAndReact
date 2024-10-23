@@ -18,7 +18,7 @@ class NoteSearch extends Note
     {
         return [
             [['id_note', 'id_user'], 'integer'],
-            [['title', 'body', 'created_at'], 'safe'],
+            [['title', 'body', 'created_at', 'tag', 'file_path'], 'safe'],
         ];
     }
 
@@ -64,7 +64,9 @@ class NoteSearch extends Note
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'body', $this->body]);
+            ->andFilterWhere(['like', 'body', $this->body])
+            ->andFilterWhere(['like', 'tag', $this->tag])
+            ->andFilterWhere(['like', 'file_path', $this->file_path]);
 
         return $dataProvider;
     }

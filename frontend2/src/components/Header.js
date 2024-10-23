@@ -1,8 +1,13 @@
-export default function Header()
-{
+import React from 'react'
+import { createRoot } from 'react-dom/client'
+import Markdown from 'react-markdown'
+
+
+export default function Header() {
+
+  const markdown = '# Заметки';
+
   return (
-    <header>
-      <h3>Заметки</h3>
-    </header>
+    <Markdown>{markdown}</Markdown>
   )
 }

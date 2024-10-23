@@ -1,10 +1,8 @@
-
-
 import { useEffect, useState } from 'react';
-
 import Note from './Note'
-
 import CreateNoteR from './CreateNoteR';
+import Markdown from 'react-markdown'
+import TagR from './components1/TagR'
 
 
 export default function ViewNotesR({ userId }) {
@@ -37,6 +35,7 @@ export default function ViewNotesR({ userId }) {
         setLoading(false);
     }
 
+
     useEffect(() => {
         fetchNotes();
     }, []);
@@ -44,7 +43,9 @@ export default function ViewNotesR({ userId }) {
     return (
         <>
             <CreateNoteR userId={userId} notes={notes} setNotes={setNotes} />
+
             <hr />
+
             {loading ? <p>Loading...</p> : (
                 <table>
                     <thead>
@@ -52,11 +53,23 @@ export default function ViewNotesR({ userId }) {
                             <th>ID Note</th>
                             <th>Title</th>
                             <th>Body</th>
-                            <th></th>
-                            <th></th>
+                            <th>Tag</th>
+                            <th>File</th>
+                            <th>Delete</th>
+                            <th>Upadate / Save</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {/* <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        </tr> */}
                         {notes.map(note => (
                             <Note note={note} notes={notes} setNotes={setNotes} />
                         ))}
