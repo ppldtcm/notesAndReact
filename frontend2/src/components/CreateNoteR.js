@@ -1,12 +1,18 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import TagR from './components1/TagR'
+import TagCheckbox from './components1/TagCheckbox'
 
 import Markdown from 'react-markdown'
 
 export default function CreateNoteR({ userId, notes, setNotes }) {
 
-    const [selectedTag, setSelectedTag] = useState('no tag'); // Состояние для выбранного тега
+    const [selectedTags, setSelectedTags] = useState('');
+
+    const handleTagChange = (tagsString) => {
+        setSelectedTags(tagsString); // Сохраняем строку с тегами
+    };
+
+
 
     async function create(event) {
 
@@ -14,6 +20,8 @@ export default function CreateNoteR({ userId, notes, setNotes }) {
         const formData = new FormData(event.target); // собираем данные из формы
         // console.log(formData)
         formData.append("Note[id_user]", userId);
+        formData.append("Note[tags]", selectedTags); // Добавляем строку с тегами в FormData
+
         console.log(formData)
 
         const response = await fetch('http://localhost/notes/back/web/api/create-project', {
@@ -43,10 +51,12 @@ export default function CreateNoteR({ userId, notes, setNotes }) {
             <br />
             <br />
             tag:
-            <TagR selectedTag={selectedTag} onTagChange={setSelectedTag} />
+            <TagCheckbox onTagChange={handleTagChange} />
             <br />
             <br />
             <button type="submit">Create</button>
         </form >
     )
+
+
 }

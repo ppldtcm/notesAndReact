@@ -36,10 +36,10 @@ export default function Note({ note, notes, setNotes }) {
 
                     <td><input type="text" name="title" value={currentNote.title} onChange={handleChange} /></td>
                     <td><input type="text" name="body" value={currentNote.body} onChange={handleChange} />  </td>
-                    {/* <td>{note.tag}</td> */}
-                    <td>
+                    <td>{note.tag}</td>
+                    {/* <td>
                         <TagR selectedTag={currentNote.tag} onTagChange={(value) => setCurrentNote((prevNote) => ({ ...prevNote, tag: value }))} />
-                    </td>
+                    </td> */}
                     
                     <td>{note.file_url ? (
                         <a href={note.file_url} target="_blank" rel="noopener noreferrer">Download File</a>

@@ -3,6 +3,8 @@
 namespace app\controllers;
 use app\models\Note;
 use app\models\UserNote;
+
+use app\models\Tags;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
@@ -52,6 +54,7 @@ class ApiController extends \yii\web\Controller
             'msg' => 'api test ok',
         ];
     }
+
     public function actionCreateProject()
     {
         $request = \Yii::$app->request;
@@ -70,6 +73,23 @@ class ApiController extends \yii\web\Controller
 
         $saveErrors = $newNote->errors;
 
+        //Сохраняем тэги
+        if (!empty($post['Note']['tags'])) {
+            // Разделяем строку тегов на массив
+            $tagsArray = explode(',', $post['Note']['tags']);
+            foreach ($tagsArray as $tagName) {
+                $tagName = trim($tagName); // Убираем лишние пробелы
+                $noteTag = new Tags();
+                $noteTag->id_note = $newNote->id_note;
+                $noteTag->name = $tagName; 
+                $noteTag->save(); 
+
+
+                $newNote->tag = $post['Note']['tags'];
+                $newNote->save();
+
+            }
+        }
 
         // Загружаем данные из формы в модель
         if ($newNote->load($post) && $newNote->save()) {
@@ -80,7 +100,6 @@ class ApiController extends \yii\web\Controller
                 $newNote->file->saveAs('uploads/' . $newNote->id_note . '.' . $newNote->file->extension);
                 $newNote->file_path = 'uploads/' . $newNote->id_note . '.' . $newNote->file->extension;
                 $newNote->save(false);
-
 
                 return [
                     'message' => 'Заметка и файл успешно сохранены',
@@ -180,6 +199,9 @@ class ApiController extends \yii\web\Controller
         $note = Note::findOne(['id_note' => $id_note]);
 
         $note->delete();
+
+        // удаляем данный из таблицы тэгов
+        Tags::deleteAll('id_note = :id_note', [':id_note' => $id_note]);
 
         if (!empty($note['file_path'])) {
             unlink($note->file_path);
